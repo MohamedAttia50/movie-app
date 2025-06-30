@@ -1,0 +1,34 @@
+figure img {
+    width: 150px;
+    height: 230px;
+    border-radius: 20px;
+}
+
+p.clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.watch-card{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+img:hover{
+    transform: scale(1.1);
+    overflow: hidden;
+    cursor: pointer;
+}
+.btn-outline-danger{
+    padding:0 5px !important;
+}
+section{
+    background-color: rgb(10, 10, 60);
+    height: auto;
+    margin-top: 15px;
+    color: white;
+}
+.watchlist-null{
+    height: 80vh;
+}

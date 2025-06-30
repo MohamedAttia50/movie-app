@@ -1,0 +1,70 @@
+<section *ngIf="movie()" class="pt-4 mt-4"
+    [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}">
+
+    <div class="container">
+        <div class="row d-flex ">
+            <div class="col-sm-4">
+                <figure>
+                    <img [src]="'https://image.tmdb.org/t/p/w500'+movie().poster_path" alt="">
+                </figure>
+            </div>
+            <div class="col-sm-8 d-flex flex-column text-white">
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <h2>{{movie().title}} ({{movie().release_date| slice:0:4}})</h2>
+                        <time>{{movie().release_date | date}}</time>
+                    </div>
+                    <i *ngIf="isInList(movie().id)" class="fa-solid fa-heart fa-2xl align-self-center"
+                        (click)="toggleWatchlist(movie())"></i>
+                    <i *ngIf="!isInList(movie().id)" class="fa-regular fa-heart fa-2xl align-self-center"
+                        (click)="toggleWatchlist(movie())"></i>
+                </div>
+                <div>
+                    <i class="fa-solid fa-star text-warning"></i>
+                </div>
+                <div>
+                    <p>{{movie().overview}}</p>
+                </div>
+                <div>
+                    <span>Action</span>
+                    <span>Crime</span>
+                    <span>Thriller</span>
+                </div>
+                <div>
+                    <p>Duration: <span>134 Min</span></p>
+                    <p>Languages: English</p>
+                </div>
+                <figure>
+                    <img src="" alt="">
+                </figure>
+            </div>
+        </div>
+            </div>
+
+
+    <div class="pt-3 Recommendations-container">
+        <h2 class="pb-3 ms-3 mt-2 text-white ">Recommendations</h2>
+        <div class="container text-white">
+            <div class="row flex-nowrap slider ">
+                @for (movie of recomendedMovie() ;track movie.id)
+                {
+                <div class="col-md-2 col-sm-4 card flex-nowrap slider-card text-white border-0">
+                    <figure (click)="goToDetails(movie.id)">
+                        <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" [alt]="movie.title">
+                    </figure>
+                    <div class="d-flex flex-column">
+                        <h6>{{movie.title}}</h6>
+                        <div class="d-flex justify-content-between position-relative bottom-0 ">
+                            <data class="mt-auto">{{movie.release_date | date}}</data>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>

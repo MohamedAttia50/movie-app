@@ -1,0 +1,29 @@
+<app-search></app-search>
+<section>
+    <div class="container-fluid">
+        <h2>Now Playing</h2>
+        <div class="row">
+            @for(movie of movies();track movie.id){
+            <div class="col-md-2 col-sm-4 card">
+                <figure>
+                    <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" [alt]="movie.title"
+                        (click)="goToDetails(movie.id)">
+                </figure>
+                <div class="d-flex flex-column">
+                    <h5>{{movie.title}}</h5>
+                    <div class="d-flex justify-content-between position-relative bottom-0 ">
+                        <data class="mt-auto"> sep 13 ,2025</data>
+                        <div>
+                            <i *ngIf="!isInList(movie.id)" class="fa-regular fa-heart mt-auto"
+                                (click)="toggleWatchlist(movie)"></i>
+                            <i *ngIf="isInList(movie.id)" class="fa-solid fa-heart"
+                                (click)="toggleWatchlist(movie)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+</section>
