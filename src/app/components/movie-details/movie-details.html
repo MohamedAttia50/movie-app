@@ -1,5 +1,5 @@
 <section *ngIf="movie()" class="pt-4 mt-4"
-    [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}">
+    [ngStyle]="{'background-image':' linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}">
 
     <div class="container">
         <div class="row d-flex ">
@@ -26,9 +26,9 @@
                     <p>{{movie().overview}}</p>
                 </div>
                 <div>
-                    <span>Action</span>
-                    <span>Crime</span>
-                    <span>Thriller</span>
+                    @for (item of movie().genre_ids; track item) {
+                        <span>movie().genre_ids</span>
+                    }
                 </div>
                 <div>
                     <p>Duration: <span>134 Min</span></p>
@@ -44,11 +44,11 @@
 
     <div class="pt-3 Recommendations-container">
         <h2 class="pb-3 ms-3 mt-2 text-white ">Recommendations</h2>
-        <div class="container text-white">
+        <div class="container text-white ">
             <div class="row flex-nowrap slider ">
                 @for (movie of recomendedMovie() ;track movie.id)
                 {
-                <div class="col-md-2 col-sm-4 card flex-nowrap slider-card text-white border-0">
+                <div class="col-md-3 col-sm-4  col-lg-2 card flex-nowrap slider-card text-white border-0">
                     <figure (click)="goToDetails(movie.id)">
                         <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" [alt]="movie.title">
                     </figure>
@@ -57,14 +57,12 @@
                         <div class="d-flex justify-content-between position-relative bottom-0 ">
                             <data class="mt-auto">{{movie.release_date | date}}</data>
                             <div>
-
                             </div>
                         </div>
                     </div>
                 </div>
                 }
             </div>
-
         </div>
     </div>
 </section>

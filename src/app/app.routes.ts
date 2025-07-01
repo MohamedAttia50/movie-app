@@ -9,6 +9,9 @@ export const routes: Routes = [
 },
 {
     path:'watchlist' , loadComponent:()=> import('./components/watchlist/watchlist').then(m=> m.Watchlist)
+},
+{
+    path:'searchDetails' , loadComponent:()=> import('./components/search-details/search-details').then(m=> m.SearchDetails)
 }
 
 ];

@@ -60,7 +60,7 @@ isInList(movieId:number){
 
 
 goToDetails(movieId:number){
-this.router.navigate(['/movieDetials',movieId])
+this.watchlistService.goToDetails(movieId);
 }
 
 }

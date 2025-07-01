@@ -4,7 +4,7 @@
         <h2>Now Playing</h2>
         <div class="row">
             @for(movie of movies();track movie.id){
-            <div class="col-md-2 col-sm-4 card">
+            <div class="col-md-3 col-sm-4 card col-lg-2">
                 <figure>
                     <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" [alt]="movie.title"
                         (click)="goToDetails(movie.id)">

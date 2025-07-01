@@ -33,4 +33,10 @@ export class HttpService {
   }
   
 
+  searchMovie(query:string){
+    return this.httpClint.get(`https://api.themoviedb.org/3/search/movie?&query=${query}`,{
+      headers:this.headers
+    })
+
+}
 }
