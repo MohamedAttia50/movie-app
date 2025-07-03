@@ -1,0 +1,25 @@
+<app-search></app-search>
+<section class="pt-5">
+    <div class="container">
+        <h2 class="pb-3">TV Shows</h2>
+        <div class="row">
+            @for (show of tvShows(); track show.id) {
+                <div class="col-md-3 col-sm-4 card col-lg-2 border-0 py-2">
+                <figure class="" (click)="goToDetails(show.id,'tv')">
+                    <img [src]="'https://image.tmdb.org/t/p/w500'+show.poster_path" [alt]="show.title">
+                </figure>
+                <div class="d-flex flex-column">
+                    <h5 (click)="goToDetails(show.id,'tv')" >{{show.name}}</h5>
+                    <div class="d-flex justify-content-between position-relative bottom-0 ">
+                        <data class="mt-auto">{{show.first_air_date | date}}</data>
+                        <div>
+                            <i *ngIf="!isInList(show.id)" class="fa-regular fa-heart mt-auto" (click)="toggleWatchlist(show)"></i>
+                            <i *ngIf="isInList(show.id)" class="fa-solid fa-heart" (click)="toggleWatchlist(show)" ></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

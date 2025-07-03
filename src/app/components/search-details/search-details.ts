@@ -18,8 +18,8 @@ get searchResult(){
   return this.searchService.result()
 }
 
-goToDetails(movieId:number|string){
-  this.watchlistService.goToDetails(movieId)
+goToDetails(movieId:number|string ,type: "movie" | "tv"){
+  this.watchlistService.goToDetails(movieId ,type)
 }
 
 toggleWatchlist(movie:any){

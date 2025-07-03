@@ -1,0 +1,19 @@
+button{
+    &:disabled{
+        opacity: .5;
+    }
+}
+
+input{
+    overflow: hidden;
+    outline: none;
+     &.ng-invalid.ng-dirty{
+        border: red 1px solid;
+     }
+     &.ng-valid.ng-dirty{
+        border: green 2px solid;
+     }
+}
+small{
+    color: red;
+}

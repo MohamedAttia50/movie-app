@@ -11,18 +11,28 @@ import { CommonModule } from '@angular/common';
   styleUrl: './watchlist.scss'
 })
 export class Watchlist {
+
 watchlistService=inject(WatchlistService);
 router=inject(Router)
 
 get movies(){
+  
 return this.watchlistService.watchList();
+
 }
 
 removeFromList(movie:any){
   this.watchlistService.toggleWatchlist(movie)
 }
 
-goToDetails(movieId:number){
-  this.router.navigate(['/movieDetials', movieId])
+getRatingColor(vote: number){
+  return this.watchlistService.getRatingColor(vote);
 }
+// goToDetails(movieId:number ,type:'tv'|'movie'){
+//   if(!movieId || !type){
+//     console.error('Invalid navigation arguments', { movieId, type })
+//     return;
+//   }
+//   this.router.navigate(['/movieDetials', movieId , type])
+// }
 }

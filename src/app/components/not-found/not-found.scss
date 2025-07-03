@@ -1,0 +1,46 @@
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #121212;
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+
+  .content {
+    max-width: 500px;
+
+    .error-code {
+      font-size: 6rem;
+      font-weight: bold;
+      color: #e74c3c;
+      margin-bottom: 1rem;
+    }
+
+    .message {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #ccc;
+    }
+
+    .btn-home {
+      background-color: #ff6f00;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #ff8f00;
+      }
+    }
+  }
+}

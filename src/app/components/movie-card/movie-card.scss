@@ -14,3 +14,20 @@ i{
 img{
     cursor: pointer;
 }
+
+.rating-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #081c22;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  border: 2px solid #21d07a; // green border for visual rating
+}

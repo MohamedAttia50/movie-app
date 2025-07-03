@@ -6,10 +6,24 @@ header{
 small{
     left: -12px;
     top: -5px;
-    background-color: rgb(54, 54, 88);
+    background-color: rgb(54, 54, 88) ;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     color: white;
     text-align: center;
+}
+
+.nav-link{
+    color: white;
+}
+.nav-link:hover{
+    color: #857c7c;
+}
+.dropdown-item{
+    color: black !important;
+}
+h2{
+    color: white;
+    cursor: pointer;
 }

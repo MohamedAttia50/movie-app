@@ -1,0 +1,60 @@
+<section class="d-flex align-items-center justify-content-center pt-5 w-50 m-auto">
+    <form (ngSbmit)="onSubmit()" [formGroup]="registerForm" novalidate class="border border-2 rounded-3 w-75 m-auto p-5  ">
+        <h2 class="text-center">Register</h2>
+        <div class="pt-4">
+            <label for="userName">User Name</label>
+            <input type="text" name="userName" formControlName="userName" class="form-control">
+             @if(registerForm.get('userName')?.touched && registerForm.get('userName')?.errors){
+            @if(registerForm.get('userName')?.getError('required')){
+            <small> user name is required</small>
+            }
+            @if(registerForm.get('userName')?.getError('pattern')){
+            <small>User name must be at least 4 character and contain no spaces</small>
+            }
+            }
+            
+        </div>
+
+        <div class="pt-4">
+            <label for="email">Email</label>
+            <input type="text" name="email" formControlName="email" class="form-control">
+            @if (registerForm.get('email')?.touched && registerForm.get('email')?.errors ) {
+            @if(registerForm.get('email')?.getError('required')){
+            <small>email is required</small>
+            }
+            @if(registerForm.get('email')?.getError('pattern')){
+            <small>This field must be email format</small>
+            }
+
+            }
+        </div>
+
+        <div class="pt-4">
+            <label for="password">Password</label>
+            <input type="password" name="password" formControlName="password" class="form-control">
+            @if (registerForm.get('password')?.touched && registerForm.get('password')?.errors) {
+                @if (registerForm.get('password')?.getError('required')) {
+                    <small>Password is required</small>
+                }
+                @if (registerForm.get('password')?.getError('pattern')) {
+                    <small>password must be 8 character at least and contain numbers, (lower and upper case) and special
+                character </small>
+                }
+            }
+        </div>
+
+        <div class="py-4">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" name="confirmPassword" formControlName="confirmPassword" class="form-control">
+            @if (registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors) {
+                @if (registerForm.get('confirmPassword')?.getError('required')) {
+                    <small>This field is required</small>
+                }
+                @if(registerForm.get('confirmPassword')?.getError('passwordMismatch')){
+                    <small>Passwords do not match</small>
+                }
+            }
+        </div>
+        <button [disabled]="registerForm.invalid" class="btn btn-outline-warning w-100 ">Register</button>
+    </form>
+</section>

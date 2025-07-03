@@ -1,17 +1,23 @@
 <section>
+
+
+    
     <form (ngSubmit)="searchService.onSearch()" #searchDetails="ngForm" class="py-2">
         <input type="search" placeholder="Search and explore...." class="form-control py-2"
             [value]="searchService.userQuery()" (input)="searchService.userQuery.set($any($event.target).value)">
     </form>
+
+
+
     <div class="container">
         @for (item of searchResult; track item.id) {
         <div class="d-flex gap-2 border border-1 shadow  my-3 rounded-4">
-            <figure class="m-0" (click)="goToDetails(item.id)">
+            <figure class="m-0" (click)="goToDetails(item.id ,'movie')">
                 <img [src]="'https://image.tmdb.org/t/p/w500'+ item.poster_path" [alt]="item.title" class="rounded-4">
             </figure>
             <div class=" align-self-center px-3">
                 <div class="d-flex justify-content-between">
-                    <h3 (click)="goToDetails(item.id)">{{item.title}} ({{item.release_date | slice:0:4}})</h3>
+                    <h3 (click)="goToDetails(item.id,'movie')">{{item.title}} ({{item.release_date | slice:0:4}})</h3>
                     <i *ngIf="isInList(item.id)" class="fa-solid fa-heart fa-2xl align-self-center" (click)="toggleWatchlist(item)"></i>
                     <i *ngIf="!isInList(item.id)" class="fa-regular fa-heart fa-2xl align-self-center" (click)="toggleWatchlist(item)"></i>
                 </div>

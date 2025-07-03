@@ -2,16 +2,33 @@
     [ngStyle]="{'background-image':' linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}">
 
     <div class="container">
+       
+
+        <!-- Modal template -->
+        <ng-template #trailerModal let-modal>
+            <div class="modal-header">
+                <h5 class="modal-title text-dark">Trailer</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe *ngIf="safeTrailerUrl() as url" width="100%" height="400" [src]="url" frameborder="0"
+                    allowfullscreen class="w-100">
+                </iframe>
+            </div>
+        </ng-template>
+
+
         <div class="row d-flex ">
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <figure>
                     <img [src]="'https://image.tmdb.org/t/p/w500'+movie().poster_path" alt="">
                 </figure>
             </div>
-            <div class="col-sm-8 d-flex flex-column text-white">
+            <div class="col-md-8 d-flex flex-column text-white align-self-center">
                 <div class="d-flex justify-content-between">
                     <div class="">
-                        <h2>{{movie().title}} ({{movie().release_date| slice:0:4}})</h2>
+                        <h2>{{movie().title}} {{movie().name}} ({{movie().first_air_date|
+                            slice:0:4}}{{movie().release_date| slice:0:4}})</h2>
                         <time>{{movie().release_date | date}}</time>
                     </div>
                     <i *ngIf="isInList(movie().id)" class="fa-solid fa-heart fa-2xl align-self-center"
@@ -19,43 +36,55 @@
                     <i *ngIf="!isInList(movie().id)" class="fa-regular fa-heart fa-2xl align-self-center"
                         (click)="toggleWatchlist(movie())"></i>
                 </div>
-                <div>
-                    <i class="fa-solid fa-star text-warning"></i>
+
+                <div class="d-flex align-items-center py-3">
+                    <div class="rating-circle" [ngStyle]="{ 'border-color': getRatingColor(movie().vote_average) }">
+                        <span>{{ movie().vote_average * 10 | number:'1.0-0' }}%</span>
+                    </div>
+                    <span class="p-2">User<br>Score</span>
                 </div>
-                <div>
-                    <p>{{movie().overview}}</p>
+
+                <div class="py-3 d-flex gap-3">
+                    <div class="bg-info rounded-5 p-2 text-dark">
+                        Vote count: ({{movie().vote_count}})
+                    </div>
+                    <div class="bg-danger-subtle rounded-5 p-2 text-dark">
+                        Languages: ({{movie().original_language |uppercase}})
+                    </div>
+                    <div class="p-2">
+                        <i class="fa-solid fa-play fa-xl"  (click)="openTrailerModal()"></i>
+                        Play Trailer
+                    </div>
+
+
                 </div>
-                <div>
-                    @for (item of movie().genre_ids; track item) {
-                        <span>movie().genre_ids</span>
-                    }
+                <div class="py-3">
+                    <h3>overview</h3>
+                    <p class="fw-semibold">{{movie().overview}}</p>
                 </div>
-                <div>
-                    <p>Duration: <span>134 Min</span></p>
-                    <p>Languages: English</p>
+
+                <div class="w-25 rounded-0 py-3">
+                    <img src="assets/images/hUzeosd33nzE5MCNsZxCGEKTXaQ 1.png" alt="">
                 </div>
-                <figure>
-                    <img src="" alt="">
-                </figure>
             </div>
         </div>
-            </div>
+    </div>
 
 
-    <div class="pt-3 Recommendations-container">
+    <div class="pt-3 Recommendations-container" *ngIf="recomendedMovie().length !==0">
         <h2 class="pb-3 ms-3 mt-2 text-white ">Recommendations</h2>
         <div class="container text-white ">
             <div class="row flex-nowrap slider ">
                 @for (movie of recomendedMovie() ;track movie.id)
                 {
                 <div class="col-md-3 col-sm-4  col-lg-2 card flex-nowrap slider-card text-white border-0">
-                    <figure (click)="goToDetails(movie.id)">
+                    <figure (click)="goToDetails(movie.id, movie.media_type)">
                         <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" [alt]="movie.title">
                     </figure>
                     <div class="d-flex flex-column">
-                        <h6>{{movie.title}}</h6>
+                        <h6>{{movie.title}} {{movie.name}}</h6>
                         <div class="d-flex justify-content-between position-relative bottom-0 ">
-                            <data class="mt-auto">{{movie.release_date | date}}</data>
+                            <data class="mt-auto">{{movie.release_date | date}} {{movie.first_air_date | date}}</data>
                             <div>
                             </div>
                         </div>

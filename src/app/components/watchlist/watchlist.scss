@@ -18,7 +18,6 @@ p.clamp {
 img:hover{
     transform: scale(1.1);
     overflow: hidden;
-    cursor: pointer;
 }
 .btn-outline-danger{
     padding:0 5px !important;
@@ -31,4 +30,21 @@ section{
 }
 .watchlist-null{
     height: 80vh;
+}
+.rating-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #081c22;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #21d07a; // green border for visual rating
+}
+
+.rating-circle:hover{
+    transform: scale(1.2);
 }
