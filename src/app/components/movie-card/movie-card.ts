@@ -4,10 +4,11 @@ import { WatchlistService } from '../../services/watchlist-service/watchlist-ser
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Search } from '../search/search';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [CommonModule, Search],
+  imports: [CommonModule, Search, NgbPaginationModule],
   templateUrl: './movie-card.html',
   styleUrl: './movie-card.scss'
 })
@@ -22,17 +23,33 @@ export class MovieCard {
   httpService = inject(HttpService);
   watchlistService = inject(WatchlistService);
   movies = signal<any[]>([]);
-  router = inject(Router)
+  router = inject(Router);
+
+  currentPage=signal(1);
+  totalResults = signal(0);
 
 
 
   ngOnInit() {
-    this.httpService.getMoviesData().subscribe({
-      next: (data: any) => {
+    this.fetchMovies(this.currentPage());
+  }
+
+  fetchMovies(page:number){
+    this.httpService.getNowPlayingMovies(page).subscribe({
+      next:(data:any)=>{
         this.movies.set(data.results);
+        this.totalResults.set(data.total_results);
+        console.log(data);
+        
       },
-      error: (err: any) => console.error('faild to fetch the data', err)
+      error:(err:any) => console.error('Error fetching movies', err)
+
     })
+  }
+
+  onPageChange(page:number){
+    this.currentPage.set(page);
+    this.fetchMovies(page);
   }
 
   toggleWatchlist(movie: any) {

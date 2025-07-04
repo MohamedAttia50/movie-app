@@ -59,4 +59,9 @@ export class HttpService {
   getVideos(id:number |string , type:'tv'|'movie'){
     return this.httpClint.get(`https://api.themoviedb.org/3/${type}/${id}/videos`,this.withLang())
   }
+
+  getNowPlayingMovies(page = 1) {
+  return this.httpClint.get(
+    `https://api.themoviedb.org/3/movie/now_playing?&language=en&page=${page}`,this.withLang());
+}
 }

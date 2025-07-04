@@ -23,7 +23,7 @@
                         <a class="nav-link ms-3 fs-4 fw-bold me-2" routerLink="/login">Login</a>
                     </div>
 
-                    <div class="me-4">
+                    <div class="mx-4">
                         <select [value]="lang()" (change)="changeLang($any($event.target).value)" class="bg-transparent border border-1 text-white">
                             <option value="en" class="text-black">English</option>
                             <option value="ar" class="text-black">Arabic</option>
@@ -34,10 +34,10 @@
                     
 
                     <div class=" d-flex gap-5 text-white col-4 justify-content-end ">
-                        <div class="d-flex gap-2 position-relative">
+                        <div class="d-flex gap-2 position-relative align-self-end">
                             <a [routerLink]="['/watchlist']" routerLinkActive="router-link-active"><i
                                     class="fa-solid fa-heart fa-2xl"></i></a>
-                            <p>watchlist</p>
+                            <p class="m-0">watchlist</p>
                             <small class="position-absolute ">{{watchlistService.watchlistCount()}}</small>
                         </div>
                     </div>
