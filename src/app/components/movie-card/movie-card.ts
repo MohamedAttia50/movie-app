@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Search } from '../search/search';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../services/auth-service/auth-service';
 
 @Component({
   selector: 'app-movie-card',
@@ -22,13 +23,20 @@ export class MovieCard {
   };
   httpService = inject(HttpService);
   watchlistService = inject(WatchlistService);
+  authService=inject(AuthService);
   movies = signal<any[]>([]);
   router = inject(Router);
 
   currentPage=signal(1);
   totalResults = signal(0);
+  hoveredMovieId = signal<number | null>(null);
+  isLoggedIn = this.authService.isLoggedIn;
 
 
+  onWatchlistClick(movie:any){
+     if (!this.isLoggedIn()) return;
+  this.toggleWatchlist(movie);
+  }
 
   ngOnInit() {
     this.fetchMovies(this.currentPage());
@@ -68,6 +76,7 @@ export class MovieCard {
   getRatingColor(vote: number): string {
   return this.watchlistService.getRatingColor(vote);
 }
+
 
 
 }

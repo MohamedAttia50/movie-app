@@ -4,18 +4,29 @@
         <h2 class="pb-3">TV Shows</h2>
         <div class="row">
             @for (show of tvShows(); track show.id) {
-                <div class="col-md-3 col-sm-4 card col-lg-2 border-0 py-2">
+            <div class="col-md-3 col-sm-4 card col-lg-2 border-0 py-2">
                 <figure class="" (click)="goToDetails(show.id,'tv')">
                     <img [src]="'https://image.tmdb.org/t/p/w500'+show.poster_path" [alt]="show.title">
                 </figure>
                 <div class="d-flex flex-column">
-                    <h5 (click)="goToDetails(show.id,'tv')" >{{show.name}}</h5>
+                    <h5 (click)="goToDetails(show.id,'tv')">{{show.name}}</h5>
                     <div class="d-flex justify-content-between position-relative bottom-0 ">
                         <data class="mt-auto">{{show.first_air_date | date}}</data>
-                        <div>
-                            <i *ngIf="!isInList(show.id)" class="fa-regular fa-heart mt-auto" (click)="toggleWatchlist(show)"></i>
-                            <i *ngIf="isInList(show.id)" class="fa-solid fa-heart" (click)="toggleWatchlist(show)" ></i>
+                        <div class="position-relative" (mouseenter)="hoveredShowId.set(show.id)"
+                            (mouseleave)="hoveredShowId.set(null)">
+
+                            <div *ngIf="!isLoggedIn() && hoveredShowId() === show.id"
+                                class="tooltip-box position-absolute bg-dark text-white px-2 py-1 rounded small"
+                                style="top: -30px; right: 0; z-index: 10;">
+                                Login to add to watchlist
+                            </div>
+
+                            <i class="mt-auto" [class.fa]="true" [class.fa-regular]="!isInList(show.id)"
+                                [class.fa-solid]="isInList(show.id)" [class.fa-heart]="true"
+                                (click)="toggleWatchlist(show)">
+                            </i>
                         </div>
+
                     </div>
                 </div>
             </div>

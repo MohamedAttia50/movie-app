@@ -3,6 +3,7 @@ import { HttpService } from '../../services/http-service/http-service';
 import { CommonModule } from '@angular/common';
 import { WatchlistService } from '../../services/watchlist-service/watchlist-service';
 import { Search } from '../search/search';
+import { AuthService } from '../../services/auth-service/auth-service';
 @Component({
   selector: 'app-tv-shows',
   imports: [CommonModule ,Search] ,
@@ -11,8 +12,17 @@ import { Search } from '../search/search';
 })
 export class TvShows {
 httpService=inject(HttpService);
+authService=inject(AuthService);
 tvShows=signal<any[]>([]);
-watchlistService=inject(WatchlistService)
+watchlistService=inject(WatchlistService);
+isLoggedIn = this.authService.isLoggedIn;
+hoveredShowId = signal<number | null>(null);
+
+
+onWatchlistClick(show: any) {
+  if (!this.isLoggedIn()) return;
+  this.toggleWatchlist(show);
+}
 
 ngOnInit(){
   this.httpService.getTvShows().subscribe({
@@ -26,6 +36,7 @@ ngOnInit(){
 }
 
 toggleWatchlist(movie:any){
+  if (!this.isLoggedIn()) return;
  this.watchlistService.toggleWatchlist(movie);
 }
 

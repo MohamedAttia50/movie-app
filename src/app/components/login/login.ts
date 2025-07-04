@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,21 @@ import { RouterLink } from '@angular/router';
 })
 export class Login {
   fb=inject(FormBuilder);
+  authService=inject(AuthService);
+  router=inject(Router)
+  
+
+  onLogin(){
+
+  const {email,password} =this.loginForm.value;
+  const success= this.authService.login(email,password)
+
+    if(success){
+      this.router.navigate(['/']);
+    } else{
+      alert('invalid email or password')
+    }
+  }
 
   loginForm:FormGroup=this.fb.group({
     email:['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)]],

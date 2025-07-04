@@ -31,3 +31,8 @@ img{
   left: 10px;
   border: 2px solid #21d07a; // green border for visual rating
 }
+.tooltip-box {
+  font-size: 12px;
+  pointer-events: none;
+  white-space: nowrap;
+}

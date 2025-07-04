@@ -1,7 +1,7 @@
 <header class="">
     <div class="container">
         <nav class="navbar navbar-expand-lg   px-3">
-            <h2 routerLink="/">MovieApp</h2>
+            <h2 routerLink="/" class="me-3">MovieApp</h2>
 
             <button class="navbar-toggler bg-white" type="button" (click)="isNavbarCollapsed.set(!isNavbarCollapsed())">
                 <span class="navbar-toggler-icon  "></span>
@@ -10,7 +10,7 @@
             <div [ngbCollapse]="isNavbarCollapsed()" class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link ms-3 " routerLink="/">Movies</a>
+                        <a class="nav-link  " routerLink="/">Movies</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/tv']">TV Show</a>
@@ -19,19 +19,32 @@
 
                 <div class="d-flex justify-content-between align-items-center">
 
-                    <div>
-                        <a class="nav-link ms-3 fs-4 fw-bold me-2" routerLink="/login">Login</a>
-                    </div>
+                    <!-- 👤 Show when logged in -->
+                    <ng-container *ngIf="isLoggedIn(); else loginLink">
+                        <div class="text-white me-3">
+                            <span>Welcome,{{ user()?.username }}</span>
+                        </div>
+                        <button class="btn btn-outline-light btn-sm me-3" (click)="onLogout()">Logout</button>
+                    </ng-container>
+
+                    <!-- 🔐 Show when NOT logged in -->
+                    <ng-template #loginLink>
+                        <div>
+                            <a class="nav-link ms-3 fs-4 fw-bold me-2" routerLink="/login">Login</a>
+                        </div>
+                    </ng-template>
+
 
                     <div class="mx-4">
-                        <select [value]="lang()" (change)="changeLang($any($event.target).value)" class="bg-transparent border border-1 text-white">
+                        <select [value]="lang()" (change)="changeLang($any($event.target).value)"
+                            class="bg-transparent border border-1 text-white">
                             <option value="en" class="text-black">English</option>
                             <option value="ar" class="text-black">Arabic</option>
                             <option value="fr" class="text-black">French</option>
                             <option value="zh" class="text-black">Chinese</option>
                         </select>
                     </div>
-                    
+
 
                     <div class=" d-flex gap-5 text-white col-4 justify-content-end ">
                         <div class="d-flex gap-2 position-relative align-self-end">

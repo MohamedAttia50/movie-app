@@ -17,12 +17,25 @@
                     <h5 class="pt-2">{{movie.title}}</h5>
                     <div class="d-flex justify-content-between position-relative bottom-0 ">
                         <data class="mt-auto"> {{movie.release_date | date}}</data>
-                        <div>
-                            <i *ngIf="!isInList(movie.id)" class="fa-regular fa-heart mt-auto"
-                                (click)="toggleWatchlist(movie)"></i>
-                            <i *ngIf="isInList(movie.id)" class="fa-solid fa-heart"
-                                (click)="toggleWatchlist(movie)"></i>
+
+                        
+                        <div class="position-relative" (mouseenter)="hoveredMovieId.set(movie.id)"
+                            (mouseleave)="hoveredMovieId.set(null)">
+
+                            
+                            <div *ngIf="!isLoggedIn() && hoveredMovieId() === movie.id"
+                                class="tooltip-box position-absolute bg-dark text-white px-2 py-1 rounded small"
+                                style="top: -30px; right: 0; z-index: 10;">
+                                Login to add to watchlist
+                            </div>
+
+                            
+                            <i class="mt-auto" [class.fa]="true" [class.fa-regular]="!isInList(movie.id)"
+                                [class.fa-solid]="isInList(movie.id)" [class.fa-heart]="true"
+                                (click)="onWatchlistClick(movie)">
+                            </i>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -31,16 +44,10 @@
         </div>
 
         <div class="d-flex justify-content-center mt-4">
-      <ngb-pagination
-        [collectionSize]="totalResults()"
-        [(page)]="currentPage"
-        [pageSize]="20"
-        (pageChange)="onPageChange($event)"
-        [maxSize]="5"
-        [rotate]="true"
-        [ellipses]="true"
-        [boundaryLinks]="true">
-      </ngb-pagination>
-    </div>
+            <ngb-pagination [collectionSize]="totalResults()" [(page)]="currentPage" [pageSize]="20"
+                (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="true"
+                [boundaryLinks]="true">
+            </ngb-pagination>
+        </div>
     </div>
 </section>

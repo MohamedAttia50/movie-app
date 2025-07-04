@@ -2,9 +2,8 @@
     [ngStyle]="{'background-image':' linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}">
 
     <div class="container">
-       
 
-        <!-- Modal template -->
+
         <ng-template #trailerModal let-modal>
             <div class="modal-header">
                 <h5 class="modal-title text-dark">Trailer</h5>
@@ -31,10 +30,20 @@
                             slice:0:4}}{{movie().release_date| slice:0:4}})</h2>
                         <time>{{movie().release_date | date}}</time>
                     </div>
-                    <i *ngIf="isInList(movie().id)" class="fa-solid fa-heart fa-2xl align-self-center"
-                        (click)="toggleWatchlist(movie())"></i>
-                    <i *ngIf="!isInList(movie().id)" class="fa-regular fa-heart fa-2xl align-self-center"
-                        (click)="toggleWatchlist(movie())"></i>
+
+                    <div class="position-relative d-inline-block" (mouseenter)="hoveredHeart.set(true)"
+                        (mouseleave)="hoveredHeart.set(false)">
+
+                        <div *ngIf="!isLoggedIn() && hoveredHeart()"
+                            class="tooltip-box position-absolute bg-dark text-white px-2 py-1 rounded small"
+                            style="top: -30px; right: 0; z-index: 10;">
+                            Login to add to watchlist
+                        </div>
+
+                        <i class="fs-4 fa-2xl" [class.fa]="true"  [class.fa-heart]="true" [class.fa-regular]="!isInList(movie().id)"
+                            [class.fa-solid]="isInList(movie().id)" (click)="onWatchlistClick(movie())">
+                        </i>
+                    </div>
                 </div>
 
                 <div class="d-flex align-items-center py-3">
@@ -52,7 +61,7 @@
                         Languages: ({{movie().original_language |uppercase}})
                     </div>
                     <div class="p-2">
-                        <i class="fa-solid fa-play fa-xl"  (click)="openTrailerModal()"></i>
+                        <i class="fa-solid fa-play fa-xl" (click)="openTrailerModal()"></i>
                         Play Trailer
                     </div>
 

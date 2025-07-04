@@ -29,9 +29,16 @@ figure{
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #21d07a; // green border for visual rating
+  border: 2px solid #21d07a; 
 }
 
 .rating-circle:hover{
     transform: scale(1.2);
+}
+
+
+.tooltip-box {
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
 }

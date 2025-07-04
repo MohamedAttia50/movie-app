@@ -2,3 +2,8 @@ img{
     cursor: pointer;
     border-radius: 12px;
 }
+.tooltip-box {
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+}

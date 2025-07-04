@@ -5,6 +5,7 @@ import { HttpService } from '../../services/http-service/http-service';
 import { CommonModule } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth-service/auth-service';
 @Component({
   selector: 'app-movie-details',
   imports: [CommonModule],
@@ -13,13 +14,17 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class MovieDetails {
   watchlistService = inject(WatchlistService);
-  httpService = inject(HttpService)
+  httpService = inject(HttpService);
+  authService=inject(AuthService);
   route = inject(ActivatedRoute);
-  router = inject(Router)
+  router = inject(Router);
 
-  movie = signal<any>(null)
-  recomendedMovie = signal<any[]>([])
-  inWatchlist = signal<boolean>(false)
+  movie = signal<any>(null);
+  recomendedMovie = signal<any[]>([]);
+  inWatchlist = signal<boolean>(false);
+
+  hoveredHeart=signal<boolean>(false);
+  isLoggedIn=this.authService.isLoggedIn;
 
   modalService = inject(NgbModal);
   sanitizer = inject(DomSanitizer);
@@ -73,8 +78,13 @@ export class MovieDetails {
 
   }
 
+  onWatchlistClick(movie: any) {
+    if (!this.isLoggedIn()) return;
+    this.toggleWatchlist(movie);
+  }
   toggleWatchlist(movie: any) {
     this.watchlistService.toggleWatchlist(movie);
+    
   }
 
   isInList(movieId: number) {

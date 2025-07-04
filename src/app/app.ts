@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
+import { AuthService } from './services/auth-service/auth-service';
 
 
 @Component({
@@ -11,4 +12,9 @@ import { Header } from './components/header/header';
 })
 export class App {
   protected title = 'movie-app';
+  private authService=inject(AuthService);
+
+  ngOnInit(){
+    this.authService.initAuthState()
+  }
 }
