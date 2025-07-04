@@ -34,4 +34,8 @@ export class WatchlistService {
     return '#db2360'; // red
   }
 
+  clearWatchlist() {
+  this.watchList.set([]); 
+}
+
 }

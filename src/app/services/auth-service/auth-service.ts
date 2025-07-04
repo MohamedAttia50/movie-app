@@ -1,10 +1,13 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { User } from '../../models/user';
+import { WatchlistService } from '../watchlist-service/watchlist-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  watchlistService=inject(WatchlistService)
 
   private userSignal=signal<User |null>(null);
 
@@ -41,6 +44,7 @@ export class AuthService {
   logOut(){
   sessionStorage.removeItem('currentUser');
   this.userSignal.set(null);
+  this.watchlistService.clearWatchlist();
   }
 
 }

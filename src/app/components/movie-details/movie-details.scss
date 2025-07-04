@@ -42,3 +42,6 @@ figure{
   white-space: nowrap;
   pointer-events: none;
 }
+.details div:hover{
+    transform: scale(1.1);
+}

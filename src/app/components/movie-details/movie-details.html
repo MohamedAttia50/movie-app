@@ -53,12 +53,12 @@
                     <span class="p-2">User<br>Score</span>
                 </div>
 
-                <div class="py-3 d-flex gap-3">
-                    <div class="bg-info rounded-5 p-2 text-dark">
-                        Vote count: ({{movie().vote_count}})
+                <div class="py-3 d-flex gap-3 details">
+                    <div class="bg-info rounded-5 p-2 text-dark ">
+                        <small>Vote ({{movie().vote_count}})</small> 
                     </div>
                     <div class="bg-danger-subtle rounded-5 p-2 text-dark">
-                        Languages: ({{movie().original_language |uppercase}})
+                        <small class="fw-bold"> ({{movie().original_language |uppercase}})</small>
                     </div>
                     <div class="p-2">
                         <i class="fa-solid fa-play fa-xl" (click)="openTrailerModal()"></i>
