@@ -16,8 +16,10 @@ watchlistService=inject(WatchlistService);
 router=inject(Router)
 
 get movies(){
-  
+  console.log(this.watchlistService.watchList());
+
 return this.watchlistService.watchList();
+
 
 }
 

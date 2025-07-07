@@ -36,6 +36,7 @@ export class AuthService {
 
     if(savedUser.email===email && savedUser.password===password){
       this.userSignal.set(savedUser);
+      sessionStorage.setItem('currentUser', JSON.stringify(savedUser));
       return true
     }
     return false;

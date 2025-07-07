@@ -30,7 +30,9 @@ export class MovieDetails {
   sanitizer = inject(DomSanitizer);
   trailerKey = signal<string | null>(null);
   safeTrailerUrl = signal<SafeResourceUrl | null>(null);
+  trailerAvailable =signal(false)
 
+  reviewsList=signal<any[]>([]);
   @ViewChild('trailerModal') trailerModalRef!: TemplateRef<any>;
 
 
@@ -41,7 +43,8 @@ export class MovieDetails {
       if (id && type) {
         this.loadDetails(id, type);
         this.loadRecomendations(id, type);
-        this.loadTrailer(id, type)
+        this.loadTrailer(id, type);
+        this.getReviews(id,type);
       }
     })
   }
@@ -56,6 +59,8 @@ export class MovieDetails {
       next: (data: any) => {
         this.movie.set(data)
         this.inWatchlist.set(this.watchlistService.isInList(data.id))
+        console.log(this.movie());
+        
       },
       error: (err: any) => console.error(`faild to fetch the ${type} details with id`, err)
     })
@@ -98,7 +103,10 @@ export class MovieDetails {
 
 
   getRatingColor(vote: number): string {
-    return this.watchlistService.getRatingColor(vote)
+    return this.watchlistService.getRatingColor(vote);
+  }
+  getConicGradient(vote: number){
+    return this.watchlistService.getConicGradient(vote);
   }
 
   loadTrailer(id: number | string, type: 'movie' | 'tv') {
@@ -108,13 +116,26 @@ export class MovieDetails {
         if (trailer?.key) {
           this.trailerKey.set(trailer.key);
           this.safeTrailerUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${trailer.key}`));
+          this.trailerAvailable.set(true);
         }
       },
-      error: (err) => console.error('Error fetching trailer', err),
+      error: (err) =>{
+        console.error('Error fetching trailer', err)
+        this.trailerAvailable.set(false);
+      } 
     });
   }
 
   openTrailerModal() {
     this.modalService.open(this.trailerModalRef, { size: 'lg', centered: true });
+  }
+
+  getReviews(id:number|string ,type:'tv'|'movie'){
+    return this.httpService.getReviews(id,type).subscribe({
+      next:(data:any)=>{ this.reviewsList.set(data.results)
+        console.log(data.results);
+      },
+      error:(err:any)=> console.error(err)
+    })
   }
 }

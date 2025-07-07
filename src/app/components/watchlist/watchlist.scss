@@ -3,17 +3,16 @@ figure img {
     height: 230px;
     border-radius: 20px;
 }
-
 p.clamp {
     display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .watch-card{
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
 }
 img:hover{
     transform: scale(1.1);
@@ -23,14 +22,16 @@ img:hover{
     padding:0 5px !important;
 }
 section{
-    background-color: rgb(10, 10, 60);
+    // background-color: rgb(10, 10, 60);
+    color: black;
     height: auto;
-    margin-top: 15px;
-    color: white;
+    // color: white;
+    padding-top: 120px;
 }
 .watchlist-null{
     height: 80vh;
 }
+
 .rating-circle {
   width: 50px;
   height: 50px;
@@ -42,7 +43,7 @@ section{
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #21d07a; // green border for visual rating
+  border: 2px solid #21d07a;
 }
 
 .rating-circle:hover{

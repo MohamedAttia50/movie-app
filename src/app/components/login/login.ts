@@ -14,6 +14,7 @@ export class Login {
   fb=inject(FormBuilder);
   authService=inject(AuthService);
   router=inject(Router)
+  loginFailed = signal(false);
   
 
   onLogin(){
@@ -22,9 +23,10 @@ export class Login {
   const success= this.authService.login(email,password)
 
     if(success){
+      this.loginFailed.set(false);
       this.router.navigate(['/']);
     } else{
-      alert('invalid email or password')
+      this.loginFailed.set(true)
     }
   }
 

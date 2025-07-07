@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 })
 export class WatchlistService {
 
-  watchList = signal<any[]>([]);
+  private initialWatchlist= this.getWatchlistFromStorage();
+  watchList = signal<any[]>(this.initialWatchlist);
   watchlistCount = computed(() => this.watchList().length);
   router = inject(Router)
 
@@ -17,7 +18,9 @@ export class WatchlistService {
     });
   }
 
-
+  watchlistEffect =effect(()=>{
+    sessionStorage.setItem('watchlist_key',JSON.stringify(this.watchList()))
+  })
   isInList(movieId: number) {
     return this.watchList().some((m) => m.id === movieId)
   }
@@ -26,6 +29,11 @@ export class WatchlistService {
     this.router.navigate(['/movieDetials',type ,movieId])
   }
 
+getConicGradient(vote: number): string {
+  const percent = Math.round(vote * 10);
+  const color = this.getRatingColor(vote);
+  return `conic-gradient(${color} ${percent}%, #204529 ${percent}%)`;
+}
 
   getRatingColor(vote: number): string {
     const percent = vote * 10;
@@ -36,6 +44,12 @@ export class WatchlistService {
 
   clearWatchlist() {
   this.watchList.set([]); 
+  sessionStorage.removeItem('watchlist_key');
+}
+
+private getWatchlistFromStorage():any[]{
+  const data =sessionStorage.getItem('watchlist_key');
+  return data ?JSON.parse(data):[];
 }
 
 }

@@ -64,4 +64,8 @@ export class HttpService {
   return this.httpClint.get(
     `https://api.themoviedb.org/3/movie/now_playing?&language=en&page=${page}`,this.withLang());
 }
+
+getReviews(id:number | string, type:'tv' |'movie'){
+  return this.httpClint.get(`https://api.themoviedb.org/3/${type}/${id}/reviews`,this.withLang());
+}
 }

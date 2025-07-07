@@ -17,3 +17,12 @@ input{
 small{
     color: red;
 }
+section{
+    padding-top: 120px;
+}
+
+@media(max-width:575px){
+    form{
+        width: 100% !important;
+    }
+}

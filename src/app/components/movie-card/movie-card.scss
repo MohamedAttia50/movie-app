@@ -36,3 +36,8 @@ img{
   pointer-events: none;
   white-space: nowrap;
 }
+h5{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

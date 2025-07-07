@@ -1,9 +1,8 @@
-<section class="py-4">
+<section class="">
     <div class="container">
         <h2>Watchlist</h2>
-        <div class="row">
-            <div *ngIf="movies.length===0"
-                class="d-flex justify-content-center align-items-center text-center flex-column watchlist-null">
+        <div class="row ">
+            <div *ngIf="movies.length===0" class="d-flex justify-content-center align-items-center text-center flex-column watchlist-null">
                 <div>
                     <img src="assets/images/Group.png" alt="Group">
                 </div>
@@ -12,10 +11,11 @@
                     <button [routerLink]="'/'" class="btn btn-outline-warning ">go to home</button>
                 </div>
             </div>
+
             @for(movie of movies ;track movie.id)
             {
-            <div class="col-lg-6 d-flex p-2  ">
-                <div class="d-flex gap-3 p-4  rounded-5  watch-card">
+            <div class="col-md-6 d-flex p-2">
+                <div class="d-flex gap-3 p-2  rounded-5  watch-card w-100">
                     <figure>
                         <img [src]="'https://image.tmdb.org/t/p/w500'+ movie.poster_path" alt="">
                     </figure>
@@ -24,13 +24,12 @@
                             <h2>{{movie.title}} {{movie.name}}</h2>
                             <time>{{movie.release_date | date}} {{movie.first_air_date |date}}</time>
                         </div>
-                       
                         <div class="d-flex align-items-center py-2">
                             <div class="rating-circle"
                                 [ngStyle]="{ 'border-color': getRatingColor(movie.vote_average) }">
                                 <span>{{ movie.vote_average * 10 | number:'1.0-0' }}%</span>
                             </div>
-                            <span class="p-2">User Score</span>
+                            <span class="">User Score</span>
                         </div>
                         <div>
                             <p class="clamp">{{movie.overview}}</p>
@@ -40,7 +39,8 @@
                 </div>
             </div>
             }
-
         </div>
+
+
     </div>
 </section>

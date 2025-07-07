@@ -1,92 +1,129 @@
-<section *ngIf="movie()" class="pt-4 mt-4"
-    [ngStyle]="{'background-image':' linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}">
+<section *ngIf="movie()" class="">
+    <div [ngStyle]="{'background-image':'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/original' + movie().backdrop_path + ')',}"
+        class="details-container">
+        <div class="container">
+            <ng-template #trailerModal let-modal>
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark">
+                        {{trailerAvailable() ? 'Trailer' : 'Trailer Not Available'}}
+                    </h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe *ngIf="safeTrailerUrl() as url" width="100%" height="400" [src]="url" frameborder="0"
+                        allowfullscreen class="w-100">
+                    </iframe>
+                </div>
+            </ng-template>
 
-    <div class="container">
 
-
-        <ng-template #trailerModal let-modal>
-            <div class="modal-header">
-                <h5 class="modal-title text-dark">Trailer</h5>
-                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
-            </div>
-            <div class="modal-body p-0">
-                <iframe *ngIf="safeTrailerUrl() as url" width="100%" height="400" [src]="url" frameborder="0"
-                    allowfullscreen class="w-100">
-                </iframe>
-            </div>
-        </ng-template>
-
-
-        <div class="row d-flex ">
-            <div class="col-md-4">
-                <figure>
-                    <img [src]="'https://image.tmdb.org/t/p/w500'+movie().poster_path" alt="">
-                </figure>
-            </div>
-            <div class="col-md-8 d-flex flex-column text-white align-self-center">
-                <div class="d-flex justify-content-between">
-                    <div class="">
-                        <h2>{{movie().title}} {{movie().name}} ({{movie().first_air_date|
-                            slice:0:4}}{{movie().release_date| slice:0:4}})</h2>
-                        <time>{{movie().release_date | date}}</time>
-                    </div>
-
-                    <div class="position-relative d-inline-block" (mouseenter)="hoveredHeart.set(true)"
-                        (mouseleave)="hoveredHeart.set(false)">
-
-                        <div *ngIf="!isLoggedIn() && hoveredHeart()"
-                            class="tooltip-box position-absolute bg-dark text-white px-2 py-1 rounded small"
-                            style="top: -30px; right: 0; z-index: 10;">
-                            Login to add to watchlist
+            <div class="row d-flex" *ngIf="movie().poster_path">
+                <div class="col-md-4">
+                    <figure>
+                        <img [src]="'https://image.tmdb.org/t/p/w500'+movie().poster_path" alt="">
+                    </figure>
+                </div>
+                <div class="col-md-8 d-flex flex-column text-white align-self-center">
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <h2>{{movie().title}} {{movie().name}} ({{movie().first_air_date|
+                                slice:0:4}}{{movie().release_date| slice:0:4}})</h2>
+                            <time>{{movie().release_date | date}}</time>
                         </div>
 
-                        <i class="fs-4 fa-2xl" [class.fa]="true"  [class.fa-heart]="true" [class.fa-regular]="!isInList(movie().id)"
-                            [class.fa-solid]="isInList(movie().id)" (click)="onWatchlistClick(movie())">
-                        </i>
+                        <div class="position-relative d-inline-block" (mouseenter)="hoveredHeart.set(true)"
+                            (mouseleave)="hoveredHeart.set(false)">
+
+                            <div *ngIf="!isLoggedIn() && hoveredHeart()"
+                                class="tooltip-box position-absolute bg-dark text-white px-2 py-1 rounded small"
+                                style="top: -30px; right: 0; z-index: 10;">
+                                Login to add to watchlist
+                            </div>
+
+                            <i class="fs-4 fa-2xl" [class.fa]="true" [class.fa-heart]="true"
+                                [class.fa-regular]="!isInList(movie().id)" [class.fa-solid]="isInList(movie().id)"
+                                (click)="onWatchlistClick(movie())">
+                            </i>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center py-3">
+                        <div class="rating-circle" [ngStyle]="{ 'border-color': getRatingColor(movie().vote_average) }">
+                            <span>{{ movie().vote_average * 10 | number:'1.0-0' }}%</span>
+                        </div>
+                        <span class="p-2">User<br>Score</span>
+                    </div>
+                    <div class="py-3 d-flex gap-3 details">
+                        @for (item of movie().genres; track $index) {
+                        <div class="rounded-5 p-2"
+                            [ngClass]="item.name === 'Action' ? 'bg-danger' : item.name === 'Drama' ? 'bg-warning' : item.name === 'Comedy' ? 'bg-success' : 'bg-info'">
+                            <small class="text-black-50 fw-bold">{{item.name}}</small>
+                        </div>
+                        }
+                        <div class="p-2">
+                            <i class="fa-solid fa-play fa-xl" (click)="openTrailerModal()"></i>
+                            Play Trailer
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <h3>overview</h3>
+                        <p class="fw-semibold">{{movie().overview}}</p>
                     </div>
                 </div>
-
-                <div class="d-flex align-items-center py-3">
-                    <div class="rating-circle" [ngStyle]="{ 'border-color': getRatingColor(movie().vote_average) }">
-                        <span>{{ movie().vote_average * 10 | number:'1.0-0' }}%</span>
+            </div>
+            <div class="row">
+                <div class="d-flex justify-content-evenly align-items-center logo-container mt-1 mb-3">
+                    @for (item of movie().production_companies; track $index) {
+                    <div class="col-2" *ngIf="item.logo_path">
+                        <figure class="  m-0 ">
+                            <img [src]="`https://image.tmdb.org/t/p/w500${item.logo_path}`" alt="">
+                        </figure>
                     </div>
-                    <span class="p-2">User<br>Score</span>
-                </div>
+                    }
 
-                <div class="py-3 d-flex gap-3 details">
-                    <div class="bg-info rounded-5 p-2 text-dark ">
-                        <small>Vote ({{movie().vote_count}})</small> 
-                    </div>
-                    <div class="bg-danger-subtle rounded-5 p-2 text-dark">
-                        <small class="fw-bold"> ({{movie().original_language |uppercase}})</small>
-                    </div>
-                    <div class="p-2">
-                        <i class="fa-solid fa-play fa-xl" (click)="openTrailerModal()"></i>
-                        Play Trailer
-                    </div>
-
-
-                </div>
-                <div class="py-3">
-                    <h3>overview</h3>
-                    <p class="fw-semibold">{{movie().overview}}</p>
-                </div>
-
-                <div class="w-25 rounded-0 py-3">
-                    <img src="assets/images/hUzeosd33nzE5MCNsZxCGEKTXaQ 1.png" alt="">
                 </div>
             </div>
         </div>
+
+    </div>
+    <div class="reviews">
+        <h2 class="pb-3 ms-3 mt-3 text-black ">Reviews  <small  *ngIf="reviewsList().length === 0"><br> (no reviews yet)</small></h2>
+        @for (item of reviewsList(); track item.id) {
+        <div class="container border border-1 rounded-3 py-2 my-3">
+            <div class="avatar-path d-flex gap-3" >
+                <img *ngIf="item.author_details.avatar_path"
+                    [src]="`https://image.tmdb.org/t/p/w500${item.author_details.avatar_path}`" alt="">
+                    
+                    <div *ngIf="!item.author_details.avatar_path" class="bg-danger rounded-circle user-logo">
+                        <div class="text-white p-3">
+                            {{(item.author_details.name ||item.author_details.username).slice(0,2) | uppercase}}
+                        </div>
+                    </div>
+                <div>
+                    <h3>A review by <small class="fw-normal fs-5">{{item.author_details.name ||item.author_details.username}}</small></h3>
+                    <p class="fw-light">Written by {{item.author_details.name ||item.author_details.username}} on <time>{{item.created_at |
+                            date}}</time></p>
+                </div>
+            </div>
+
+            <div class="review-content">
+                <p>{{item.content}}</p>
+            </div>
+        </div>
+        }
+
+
     </div>
 
-
-    <div class="pt-3 Recommendations-container" *ngIf="recomendedMovie().length !==0">
+    <div class="pt-3 Recommendations-container " *ngIf="recomendedMovie().length !==0"
+        [ngStyle]="{'background-image':'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://image.tmdb.org/t/p/original' +(recomendedMovie()[0].backdrop_path ||recomendedMovie()[1].backdrop_path) + ')',}">
         <h2 class="pb-3 ms-3 mt-2 text-white ">Recommendations</h2>
         <div class="container text-white ">
-            <div class="row flex-nowrap slider ">
+            <div class="row flex-nowrap slider hide-scrollbar ">
                 @for (movie of recomendedMovie() ;track movie.id)
                 {
-                <div class="col-md-3 col-sm-4  col-lg-2 card flex-nowrap slider-card text-white border-0">
+                <div class="col-md-3 col-sm-4  col-lg-2 card flex-nowrap slider-card text-white border-0 "
+                    *ngIf="movie.poster_path">
                     <figure (click)="goToDetails(movie.id, movie.media_type)">
                         <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" [alt]="movie.title">
                     </figure>
@@ -103,4 +140,5 @@
             </div>
         </div>
     </div>
+
 </section>

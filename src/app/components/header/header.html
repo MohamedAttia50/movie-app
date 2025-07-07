@@ -1,6 +1,6 @@
-<header class="">
+<header class="position-fixed w-100 z-3">
     <div class="container">
-        <nav class="navbar navbar-expand-lg   px-3">
+        <nav class="navbar navbar-expand-lg   px-3 ">
             <h2 routerLink="/" class="me-3">MovieApp</h2>
 
             <button class="navbar-toggler bg-white" type="button" (click)="isNavbarCollapsed.set(!isNavbarCollapsed())">
@@ -17,10 +17,10 @@
                     </li>
                 </ul>
 
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center user-content">
 
                     <!-- 👤 Show when logged in -->
-                    <ng-container *ngIf="isLoggedIn(); else loginLink">
+                    <ng-container *ngIf="isLoggedIn(); else loginLink" >
                         <div class="text-white me-3">
                             <span>Welcome,{{ user()?.username }}</span>
                         </div>
@@ -30,7 +30,7 @@
                     <!-- 🔐 Show when NOT logged in -->
                     <ng-template #loginLink>
                         <div>
-                            <a class="nav-link ms-3 fs-4 fw-bold me-2" routerLink="/login">Login</a>
+                            <a class="nav-link  fs-4 fw-bold me-2" routerLink="/login">Login</a>
                         </div>
                     </ng-template>
 
@@ -48,10 +48,10 @@
 
                     <div class=" d-flex gap-5 text-white col-4 justify-content-end ">
                         <div class="d-flex gap-2 position-relative align-self-end">
-                            <a [routerLink]="['/watchlist']" routerLinkActive="router-link-active"><i
+                            <a [routerLink]="['/watchlist']" routerLinkActive="router-link-active" ><i
                                     class="fa-solid fa-heart fa-2xl"></i></a>
-                            <p class="m-0">watchlist</p>
-                            <small class="position-absolute ">{{watchlistService.watchlistCount()}}</small>
+                            <p class="m-0 in-mob" >watchlist</p>
+                            <small class="position-absolute">{{watchlistService.watchlistCount()}}</small>
                         </div>
                     </div>
                 </div>

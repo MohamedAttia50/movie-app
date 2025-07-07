@@ -18,3 +18,11 @@ input{
         border: green 2px solid;
      }
 }
+@media(max-width:992px){
+    form{
+        width: 100% !important;
+    }
+}
+section{
+    padding-top: 120px;
+}
