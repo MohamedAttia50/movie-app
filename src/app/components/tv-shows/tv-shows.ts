@@ -28,7 +28,6 @@ ngOnInit(){
   this.httpService.getTvShows().subscribe({
     next:(data:any)=>{
       this.tvShows.set(data.results);
-      console.log(this.tvShows());
       
     },
     error:(err:any)=> console.error('failed to fetch tv series',err)

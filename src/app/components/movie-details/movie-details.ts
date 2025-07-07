@@ -59,7 +59,6 @@ export class MovieDetails {
       next: (data: any) => {
         this.movie.set(data)
         this.inWatchlist.set(this.watchlistService.isInList(data.id))
-        console.log(this.movie());
         
       },
       error: (err: any) => console.error(`faild to fetch the ${type} details with id`, err)
@@ -133,7 +132,6 @@ export class MovieDetails {
   getReviews(id:number|string ,type:'tv'|'movie'){
     return this.httpService.getReviews(id,type).subscribe({
       next:(data:any)=>{ this.reviewsList.set(data.results)
-        console.log(data.results);
       },
       error:(err:any)=> console.error(err)
     })

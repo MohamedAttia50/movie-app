@@ -16,7 +16,6 @@ watchlistService=inject(WatchlistService);
 router=inject(Router)
 
 get movies(){
-  console.log(this.watchlistService.watchList());
 
 return this.watchlistService.watchList();
 
@@ -30,11 +29,5 @@ removeFromList(movie:any){
 getRatingColor(vote: number){
   return this.watchlistService.getRatingColor(vote);
 }
-// goToDetails(movieId:number ,type:'tv'|'movie'){
-//   if(!movieId || !type){
-//     console.error('Invalid navigation arguments', { movieId, type })
-//     return;
-//   }
-//   this.router.navigate(['/movieDetials', movieId , type])
-// }
+
 }

@@ -15,12 +15,7 @@ import { AuthService } from '../../services/auth-service/auth-service';
 })
 export class MovieCard {
 
-  constructor() {
-    effect(() => {
-      console.log(this.movies());
-    })
-
-  };
+  constructor() {};
   httpService = inject(HttpService);
   watchlistService = inject(WatchlistService);
   authService=inject(AuthService);
@@ -47,7 +42,6 @@ export class MovieCard {
       next:(data:any)=>{
         this.movies.set(data.results);
         this.totalResults.set(data.total_results);
-        console.log(data);
         
       },
       error:(err:any) => console.error('Error fetching movies', err)

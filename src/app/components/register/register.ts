@@ -40,7 +40,5 @@ export class Register {
   },
 {validators:confirmPasswordValidator('password','confirmPassword')})
 
-  onSubmit(){
-    console.log(this.registerForm.value);
-  }
+
 }
